@@ -3,11 +3,10 @@
 
 #include "MatrixLib.h"
 
+int A[ROW][COL],B[ROW][COL],C[ROW][COL];
 
 int main(void){
     
-    int A[ROW][COL],    B[ROW][COL],    C[ROW][COL];
-
     // INPUT MATRIX
     input_matrix(A);
     printf("Print Matrix A : \r\n");
