@@ -12,7 +12,7 @@ int main(){
     printf("Elemen Matrix A : \n");
     print_matrix(A);
     printf("determinan Matrix A : %0.2f\n",determinant_matrix(A));
-    minor_matrix(B,A);
+    get_cofactor(B,A,3,0,0);
     print_minor_matrix(B);
 
     return 0;
