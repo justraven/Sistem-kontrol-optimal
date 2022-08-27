@@ -9,6 +9,7 @@ void print_minor_matrix(int matrix[ROW-1][COL-1]);
 
 void transpose_matrix(int matrix_result[ROW][COL],int matrix_input[ROW][COL]);
 void get_cofactor(int matrix_result[ROW-1][COL-1],int matrix_input[ROW][COL],int n,int target_row,int target_col);
+void minor_matrix(int matrix_result[ROW-1][COL-1],int matrix_input[ROW][COL]);
 void invers_matrix(float matrix_result[ROW][COL],int matrix_input[ROW][COL],float determinant);
 
 void add_matrix(int matrix_result[ROW][COL],int matrix_input_1[ROW][COL],int matrix_input_2[ROW][COL]);
@@ -118,22 +119,34 @@ float determinant_matrix(int matrix[ROW][COL]){
 
 }
 
-void get_cofactor(int matrix_result[ROW-1][COL-1],int matrix_input[ROW][COL],int n,int target_row,int target_col){
+void get_cofactor(int matrix_result[ROW-1][COL-1],int matrix_input[ROW][COL],int dimension,int target_row,int target_col){
 
     int minor_row,minor_col;
 
     for (int x = 0; x < ROW; x++){
         for (int y = 0; y < COL; y++){
-            if(x != target_row && y != target_row)
+            if(x != target_row && y != target_col)
                 matrix_result[minor_row][minor_col++] = matrix_input[x][y];
 
-                if(minor_col == n - 1){ // n is dimension of matrix
-                    minor_col = 0;      // reset col
-                    minor_row++;        // add new row
+                if(minor_col == dimension - 1){ // dimension of matrix
+                    minor_col = 0;              // reset col
+                    minor_row++;                // add new row
                 }
         }
     }
-
 }
+
+// void minor_matrix(int matrix_result[ROW-1][COL-1],int matrix_input[ROW][COL]){
+
+//     // get_cofactor(matrix_result,matrix_input,DIMENSION,2,2);
+//     // print_minor_matrix(matrix_result);
+
+//     // for (int x = 0; x < ROW; x++){
+//     //     for(int y = 0; y < COL; y++){
+//     //         get_cofactor(matrix_result,matrix_input,3,0,0);
+//     //         print_minor_matrix(matrix_result);
+//     //     }
+//     // }
+// }
 
 #endif
