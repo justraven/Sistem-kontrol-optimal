@@ -97,7 +97,7 @@ void multiply_matrix(int matrix_result[ROW][COL],int matrix_input_1[ROW][COL],in
 
 float determinant_matrix(int matrix[ROW][COL]){
 
-    float a,b,c;
+    float a=0,b=0,c=0;
 
     if (ROW == 3 && COL == 3) {
 
@@ -121,7 +121,7 @@ float determinant_matrix(int matrix[ROW][COL]){
 
 void get_cofactor(int matrix_result[ROW-1][COL-1],int matrix_input[ROW][COL],int dimension,int target_row,int target_col){
 
-    int minor_row,minor_col;
+    int minor_row=0,minor_col=0;
 
     for (int x = 0; x < ROW; x++){
         for (int y = 0; y < COL; y++){
@@ -136,17 +136,15 @@ void get_cofactor(int matrix_result[ROW-1][COL-1],int matrix_input[ROW][COL],int
     }
 }
 
-// void minor_matrix(int matrix_result[ROW-1][COL-1],int matrix_input[ROW][COL]){
+void minor_matrix(int matrix_result[ROW-1][COL-1],int matrix_input[ROW][COL]){
 
-//     // get_cofactor(matrix_result,matrix_input,DIMENSION,2,2);
-//     // print_minor_matrix(matrix_result);
-
-//     // for (int x = 0; x < ROW; x++){
-//     //     for(int y = 0; y < COL; y++){
-//     //         get_cofactor(matrix_result,matrix_input,3,0,0);
-//     //         print_minor_matrix(matrix_result);
-//     //     }
-//     // }
-// }
+    for (int x = 0; x < ROW; x++){
+        for(int y = 0; y < COL; y++){
+            get_cofactor(matrix_result,matrix_input,3,x,y);
+            printf("minor matrix [%d][%d] : \n",x,y);
+            print_minor_matrix(matrix_result);
+        }
+    }
+}
 
 #endif
