@@ -5,15 +5,15 @@
 
 void input_matrix(int matrix[ROW][COL]);
 void print_matrix(int matrix[ROW][COL]);
-void print_minor_matrix(int matrix[ROW-1][COL-1]);
+void print_minor_matrix(int matrix[ROW][COL][MINOR_ROW][MINOR_COL]);
 
 void transpose_matrix(int matrix_result[ROW][COL],int matrix_input[ROW][COL]);
-void get_cofactor(int matrix_result[ROW-1][COL-1],int matrix_input[ROW][COL],int n,int target_row,int target_col);
-void minor_matrix(int matrix_result[ROW-1][COL-1],int matrix_input[ROW][COL]);
+void minor_matrix(int matrix_result[ROW][COL][MINOR_ROW][MINOR_COL],int matrix_input[ROW][COL],int dimension);
+// void minor_matrix(int matrix_result[MINOR_ROW][MINOR_COL],int matrix_input[ROW][COL]);
 void invers_matrix(float matrix_result[ROW][COL],int matrix_input[ROW][COL],float determinant);
 
 void add_matrix(int matrix_result[ROW][COL],int matrix_input_1[ROW][COL],int matrix_input_2[ROW][COL]);
-void subtract_matrix(int matrix_result[ROW][COL],int matrix_input_1[ROW][COL],int matrix_result_2[ROW][COL]);
+void subtract_matrix(int matrix_result[ROW][COL],int matrix_input_1[ROW][COL],int matrix_input_2[ROW][COL]);
 void multiply_matrix(int matrix_result[ROW][COL],int matrix_input_1[ROW][COL],int matrix_input_2[ROW][COL]);
 
 float determinant_matrix(int matrix[ROW][COL]);
@@ -26,9 +26,7 @@ void input_matrix(int matrix[ROW][COL]){
             scanf("%d",&matrix[x][y]);
         }
     }
-    
     printf("\n");
-
 }
 
 void print_matrix(int matrix[ROW][COL]){
@@ -42,15 +40,23 @@ void print_matrix(int matrix[ROW][COL]){
     printf("\n");
 }
 
-void print_minor_matrix(int matrix[ROW-1][COL-1]){
+void print_minor_matrix(int matrix[ROW][COL][MINOR_ROW][MINOR_COL]){
     
-    for (int x = 0; x < ROW-1; x++){
-        for (int y = 0; y < COL-1; y++){
-            printf("%d ",matrix[x][y]);
-            if (y == ROW - 2) printf("\n");
+    for(int v = 0; v < ROW; v++){
+        for(int w = 0; w < COL; w++){
+
+            printf("Minor matrix [%d][%d] : \n",v,w);
+
+            for (int x = 0; x < MINOR_ROW; x++){
+                for (int y = 0; y < MINOR_COL; y++){
+                    printf("%d ",matrix[v][w][x][y]);
+                    if (y == ROW - 2) printf("\n");
+                }
+            }
+        printf("\n");
+
         }
     }
-    printf("\n");
 }
 
 void transpose_matrix(int matrix_result[ROW][COL],int matrix_input[ROW][COL]){
@@ -97,7 +103,7 @@ void multiply_matrix(int matrix_result[ROW][COL],int matrix_input_1[ROW][COL],in
 
 float determinant_matrix(int matrix[ROW][COL]){
 
-    float a=0,b=0,c=0;
+    float a = 0,b = 0,c = 0;
 
     if (ROW == 3 && COL == 3) {
 
@@ -116,33 +122,28 @@ float determinant_matrix(int matrix[ROW][COL]){
         return a-b;
 
     }
-
 }
 
-void get_cofactor(int matrix_result[ROW-1][COL-1],int matrix_input[ROW][COL],int dimension,int target_row,int target_col){
+void minor_matrix(int matrix_result[ROW][COL][MINOR_ROW][MINOR_COL],int matrix_input[ROW][COL],int dimension){
 
-    int minor_row=0,minor_col=0;
+    for(int target_row = 0; target_row < ROW; target_row++){
+        for(int target_col = 0; target_col < COL; target_col++){
 
-    for (int x = 0; x < ROW; x++){
-        for (int y = 0; y < COL; y++){
-            if(x != target_row && y != target_col)
-                matrix_result[minor_row][minor_col++] = matrix_input[x][y];
+            int minor_row = 0,minor_col = 0;
 
-                if(minor_col == dimension - 1){ // dimension of matrix
-                    minor_col = 0;              // reset col
-                    minor_row++;                // add new row
+            for (int x = 0; x < ROW; x++){          // row matrix
+                for (int y = 0; y < COL; y++){      // col matrix
+                    if(x != target_row && y != target_col)
+                        matrix_result[target_row][target_col][minor_row][minor_col++] = matrix_input[x][y];
+
+                    if(minor_col == dimension - 1){ // dimension of matrix
+                        minor_col = 0;              // reset col
+                        minor_row++;                // add new row
+                    }
+
                 }
-        }
-    }
-}
+            }
 
-void minor_matrix(int matrix_result[ROW-1][COL-1],int matrix_input[ROW][COL]){
-
-    for (int x = 0; x < ROW; x++){
-        for(int y = 0; y < COL; y++){
-            get_cofactor(matrix_result,matrix_input,3,x,y);
-            printf("minor matrix [%d][%d] : \n",x,y);
-            print_minor_matrix(matrix_result);
         }
     }
 }
