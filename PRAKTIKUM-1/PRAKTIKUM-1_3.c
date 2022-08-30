@@ -8,8 +8,10 @@
 
 #include "MatrixLib.h"
 
-int A[ROW][COL] = {1,2,3,4,5,6,7,8,9};
-int B[ROW][COL][ROW-1][COL-1];
+int A[ROW][COL] = {1,2,3,0,1,4,5,6,0};
+int B[ROW][COL][MINOR_ROW][MINOR_COL];
+int C[ROW][COL];
+float D[ROW][COL];
 
 int main(){
 
@@ -19,6 +21,15 @@ int main(){
     printf("determinan Matrix A : %0.2f\n\n",determinant_matrix(A));
     minor_matrix(B,A,DIMENSION);
     print_minor_matrix(B);
+    get_cofactor(C,B);
+    printf("cofactor matrix :\n");
+    print_matrix(C);
+    printf("adjoint matrix :\n"); //adjoint is transpose of cofactor matrix
+    transpose_matrix(C,C);
+    print_matrix(C);
+    printf("Invers matrix : \n");
+    invers_matrix(D,C,determinant_matrix(A));
+    print_float_matrix(D);
 
     return 0;
 }

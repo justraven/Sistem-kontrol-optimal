@@ -2,14 +2,16 @@
 #define MATRIX_H
 
 #include <stdio.h>
+#include <math.h>
 
 void input_matrix(int matrix[ROW][COL]);
 void print_matrix(int matrix[ROW][COL]);
+void print_float_matrix(float matrix[ROW][COL]);
 void print_minor_matrix(int matrix[ROW][COL][MINOR_ROW][MINOR_COL]);
 
 void transpose_matrix(int matrix_result[ROW][COL],int matrix_input[ROW][COL]);
 void minor_matrix(int matrix_result[ROW][COL][MINOR_ROW][MINOR_COL],int matrix_input[ROW][COL],int dimension);
-// void minor_matrix(int matrix_result[MINOR_ROW][MINOR_COL],int matrix_input[ROW][COL]);
+void get_cofactor(int matrix_result[ROW][COL],int matrix_input[ROW][COL][MINOR_ROW][MINOR_COL]);
 void invers_matrix(float matrix_result[ROW][COL],int matrix_input[ROW][COL],float determinant);
 
 void add_matrix(int matrix_result[ROW][COL],int matrix_input_1[ROW][COL],int matrix_input_2[ROW][COL]);
@@ -33,7 +35,18 @@ void print_matrix(int matrix[ROW][COL]){
 
     for (int x = 0; x < ROW; x++){
         for (int y = 0; y < COL; y++){
-            printf("%d ",matrix[x][y]);
+            printf("%d\t",matrix[x][y]);
+            if (y == ROW - 1) printf("\n");
+        }
+    }
+    printf("\n");
+}
+
+void print_float_matrix(float matrix[ROW][COL]){
+
+    for (int x = 0; x < ROW; x++){
+        for (int y = 0; y < COL; y++){
+            printf("%0.2f\t",matrix[x][y]);
             if (y == ROW - 1) printf("\n");
         }
     }
@@ -136,14 +149,32 @@ void minor_matrix(int matrix_result[ROW][COL][MINOR_ROW][MINOR_COL],int matrix_i
                     if(x != target_row && y != target_col)
                         matrix_result[target_row][target_col][minor_row][minor_col++] = matrix_input[x][y];
 
-                    if(minor_col == dimension - 1){ // dimension of matrix
-                        minor_col = 0;              // reset col
-                        minor_row++;                // add new row
+                    if(minor_col == dimension - 1){ // dimension of minor matrix
+                        minor_col = 0;              // reset minor col
+                        minor_row++;                // add new minor row
                     }
 
                 }
             }
 
+        }
+    }
+}
+
+void get_cofactor(int matrix_result[ROW][COL],int matrix_input[ROW][COL][MINOR_ROW][MINOR_COL]){
+
+    for (int x = 0; x < ROW; x++){
+        for (int y = 0; y < COL; y++){
+            matrix_result[x][y] = (matrix_input[x][y][0][0]*matrix_input[x][y][1][1]) - (matrix_input[x][y][0][1]*matrix_input[x][y][1][0]);
+        }
+    }
+}
+
+void invers_matrix(float matrix_result[ROW][COL],int matrix_input[ROW][COL],float determinant){
+
+    for (int x = 0; x < ROW; x++){
+        for (int y = 0; y < COL; y++){
+            matrix_result[x][y] = matrix_input[x][y] / fabs(determinant);
         }
     }
 }
