@@ -5,6 +5,20 @@
 #define print_hessian(row_1,col_1,row_2,col_2,matrix) print_sub_matrix(row_1,col_1,row_2,col_2,matrix)
 
 #include <stdio.h>
+#include <stdlib.h>
+
+struct matrix_t{
+    int row;
+    int col;
+    int data[4][4];
+};
+
+static int step [4][2] = {2,0,
+                          1,1,
+                          1,1,
+                          0,2};
+
+static struct matrix_t matrix[2][2];
 
 static int get_factorial(int x);
 
@@ -12,7 +26,7 @@ void get_integral(int poly_index,float function_input[poly_index],float function
 void get_differential(int poly_index,float function_input[poly_index],float function_output[poly_index - 1]);
 
 void get_differential_multivar(int row,int col, int diff_x, int diff_y, int function_input[row][col], int function_output[row][col]);
-void hessian_matrix(int row, int col,int function_input[row][col],int function_output[row][col]);
+void hessian_matrix(int row, int col,int function_input[row][col]);
 
 void print_function(int poly_index,float function[poly_index]);
 
@@ -83,16 +97,15 @@ void print_function(int poly_index,float function[poly_index]){
     printf("]\n");
 }
 
-void hessian_matrix(int row, int col,int function_input[row][col],int function_output[row][col]){
+void hessian_matrix(int row, int col,int function_input[row][col]){
 
     int x = 0;
 
     for (int i = 0; i < 2; i++){
-        for (int j = 0; j < 2; j++)
-        {   
+        for (int j = 0; j < 2; j++){   
             printf("Matrix hessian [%d][%d] : \n",i,j);
-            get_differential_multivar(row,col,hessian_step[x][0],hessian_step[x][1],function_input,hessian_temp);
-            print_function_matrix(row,col,hessian_temp);
+            get_differential_multivar(row,col,step[x][0],step[x][1],function_input,matrix[i][j].data);
+            print_function_matrix(row,col,matrix[i][j].data);
             x++;
         }
     }

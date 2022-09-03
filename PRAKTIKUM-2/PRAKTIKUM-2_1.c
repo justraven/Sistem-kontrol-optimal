@@ -13,15 +13,12 @@ int function_input[y_index][x_index] = {0,0,3,0, // merupakan representasi dari 
                                         0,0,0,1};
 
 int function_output[y_index][x_index];
-// int hessian_matrix[2][2][y_index][x_index];
 
 int main(){
     
     printf("Representasi fungsi polynomial dengan matrix :\n");
     print_function_matrix(y_index,x_index,function_input);
-    hessian_matrix(y_index,x_index,function_input,function_output);
-    // get_differential_multivar(y_index,x_index,2,0,function_input,function_output);
-    // print_function(y_index,x_index,function_output);
+    hessian_matrix(y_index,x_index,function_input);
 
     return 0;
 }

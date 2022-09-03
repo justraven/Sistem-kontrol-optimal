@@ -3,7 +3,11 @@
 
 #include "MatrixLib.h"
 
-int A[ROW][COL],B[ROW][COL],P[ROW][COL],    C[ROW][COL],D[ROW][COL],E[ROW][COL],F[ROW][COL];
+struct matrix_t{
+    int data[2][2];
+};
+
+struct matrix_t A,B,P, C,D,E, F;
 
 int main (){
 
@@ -12,27 +16,27 @@ int main (){
     // Dengan nilai matriks A, P dan B ditentukan oleh kalian sendiri
 
     printf("Masukkan nilai untuk matriks A : \n");
-    input_matrix(A);
+    input_matrix(ROW,COL,A.data);
     printf("Masukkan nilai untuk matriks B : \n");
-    input_matrix(B);
+    input_matrix(ROW,COL,B.data);
     printf("Masukkan nilai untuk matriks P : \n");
-    input_matrix(P);
+    input_matrix(ROW,COL,P.data);
 
-    transpose_matrix(C,A);  // C = A^T
+    transpose_matrix(ROW,COL,C.data,A.data);  // C = A^T
     printf("Hasil transpose matriks A : \n");
-    print_matrix(C);
+    print_matrix(ROW,COL,C.data);
 
     printf("Hasil penjumlahan A^T dengan P : \n");
-    add_matrix(D,C,P);      // D = A^T+P ==> C + P
-    print_matrix(D);
+    add_matrix(ROW,COL,D.data,C.data,P.data);      // D = A^T+P ==> C + P
+    print_matrix(ROW,COL,D.data);
 
     printf("Hasil perkalian [A^T+P] dengan A : \n");
-    multiply_matrix(E,D,A); // E = [A^T+P] * A ==> D * A
-    print_matrix(E);
+    multiply_matrix(ROW,COL,E.data,D.data,A.data); // E = [A^T+P] * A ==> D * A
+    print_matrix(ROW,COL,E.data);
 
     printf("Hasil pengurangan [A^T+P*A] dengan B : \n");
-    subtract_matrix(F,E,B); // F = [A^T+P*A] - B ==> F - B
-    print_matrix(F);
+    subtract_matrix(ROW,COL,F.data,E.data,B.data); // F = [A^T+P*A] - B ==> F - B
+    print_matrix(ROW,COL,F.data);
 
     return 0;
 }

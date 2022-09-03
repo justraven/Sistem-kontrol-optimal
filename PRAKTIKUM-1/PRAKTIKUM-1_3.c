@@ -17,19 +17,19 @@ int main(){
 
     // input_matrix(A);
     printf("Elemen Matrix A : \n");
-    print_matrix(A);
-    printf("determinan Matrix A : %0.2f\n\n",determinant_matrix(A));
-    minor_matrix(B,A,DIMENSION);
-    print_minor_matrix(B);
-    get_cofactor(C,B);
+    print_matrix(ROW,COL,A);
+    printf("determinan Matrix A : %0.2f\n\n",determinant_matrix(ROW,COL,A));
+    minor_matrix(ROW,COL,B,A,DIMENSION);
+    print_minor_matrix(ROW,COL,B);
+    get_cofactor(ROW,COL,C,B);
     printf("cofactor matrix :\n");
-    print_matrix(C);
+    print_matrix(ROW,COL,C);
     printf("adjoint matrix :\n"); //adjoint is transpose of cofactor matrix
-    transpose_matrix(C,C);
-    print_matrix(C);
+    transpose_matrix(ROW,COL,C,C);
+    print_matrix(ROW,COL,C);
     printf("Invers matrix : \n");
-    invers_matrix(D,C,determinant_matrix(A));
-    print_float_matrix(D);
+    invers_matrix(ROW,COL,D,C,determinant_matrix(ROW,COL,A));
+    print_float_matrix(ROW,COL,D);
 
     return 0;
 }
