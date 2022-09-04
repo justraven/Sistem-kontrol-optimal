@@ -18,7 +18,7 @@ static int step [4][2] = {2,0,
                           1,1,
                           0,2};
 
-static struct matrix_t matrix[2][2];
+static struct matrix_t hessian_output[2][2];
 
 static int get_factorial(int x);
 
@@ -101,11 +101,13 @@ void hessian_matrix(int row, int col,int function_input[row][col]){
 
     int x = 0;
 
+    printf("\n");
+
     for (int i = 0; i < 2; i++){
-        for (int j = 0; j < 2; j++){   
+        for (int j = 0; j < 2; j++){
             printf("Matrix hessian [%d][%d] : \n",i,j);
-            get_differential_multivar(row,col,step[x][0],step[x][1],function_input,matrix[i][j].data);
-            print_function_matrix(row,col,matrix[i][j].data);
+            get_differential_multivar(row,col,step[x][0],step[x][1],function_input,hessian_output[i][j].data);
+            print_function_matrix(row,col,hessian_output[i][j].data);
             x++;
         }
     }

@@ -84,7 +84,6 @@ void matrix::transpose(void){
         for(int y = 0; y < getColsSize(); y++)
             data[layer + 1][y][x] = data[layer][x][y];
     }
-
 }
 
 #endif

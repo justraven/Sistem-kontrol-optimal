@@ -4,25 +4,27 @@
 #include <stdio.h>
 #include <math.h>
 
-void input_matrix(int row, int col, int matrix[row][col]);
-void transfer_matrix(int row, int col, int matrix_output[row][col], int matrix_input[row][col]);
-void print_matrix(int row, int col, int matrix[row][col]);
-void print_float_matrix(int row, int col, float matrix[row][col]);
-void print_minor_matrix(int row, int col, int matrix[row][col][row - 1][col- 1]);
-void print_sub_matrix(int row_1, int col_1,int row_2, int col_2, int matrix[row_1][col_1][row_2][col_2]);
+static int I[2][2] = {1,0,0,1};
 
-void transpose_matrix(int row, int col, int matrix_result[row][col],int matrix_input[row][col]);
-void minor_matrix(int row, int col, int matrix_result[row][col][row - 1][col- 1],int matrix_input[row][col],int dimension);
-void get_cofactor(int row, int col, int matrix_result[row][col],int matrix_input[row][col][row - 1][col- 1]);
-void invers_matrix(int row, int col, float matrix_result[row][col],int matrix_input[row][col],float determinant);
+static void input_matrix(int row, int col, int matrix[row][col]);
+static void transfer_matrix(int row, int col, int matrix_output[row][col], int matrix_input[row][col]);
+static void print_matrix(int row, int col, int matrix[row][col]);
+static void print_float_matrix(int row, int col, float matrix[row][col]);
+static void print_minor_matrix(int row, int col, int matrix[row][col][row - 1][col- 1]);
+static void print_sub_matrix(int row_1, int col_1,int row_2, int col_2, int matrix[row_1][col_1][row_2][col_2]);
 
-void add_matrix(int row, int col, int matrix_result[row][col],int matrix_input_1[row][col],int matrix_input_2[row][col]);
-void subtract_matrix(int row, int col, int matrix_result[row][col],int matrix_input_1[row][col],int matrix_input_2[row][col]);
-void multiply_matrix(int row, int col, int matrix_result[row][col],int matrix_input_1[row][col],int matrix_input_2[row][col]);
+static void transpose_matrix(int row, int col, int matrix_result[row][col],int matrix_input[row][col]);
+static void minor_matrix(int row, int col, int matrix_result[row][col][row - 1][col- 1],int matrix_input[row][col],int dimension);
+static void get_cofactor(int row, int col, int matrix_result[row][col],int matrix_input[row][col][row - 1][col- 1]);
+static void invers_matrix(int row, int col, float matrix_result[row][col],int matrix_input[row][col],float determinant);
 
-float determinant_matrix(int row, int col, int matrix[row][col]);
+static void add_matrix(int row, int col, int matrix_result[row][col],int matrix_input_1[row][col],int matrix_input_2[row][col]);
+static void subtract_matrix(int row, int col, int matrix_result[row][col],int matrix_input_1[row][col],int matrix_input_2[row][col]);
+static void multiply_matrix(int row, int col, int matrix_result[row][col],int matrix_input_1[row][col],int matrix_input_2[row][col]);
 
-void input_matrix(int row, int col, int matrix[row][col]){
+static float determinant_matrix(int row, int col, int matrix[row][col]);
+
+static void input_matrix(int row, int col, int matrix[row][col]){
 
     for (int x = 0; x < row; x++){
         for (int y = 0; y < col; y++){
@@ -33,7 +35,7 @@ void input_matrix(int row, int col, int matrix[row][col]){
     printf("\n");
 }
 
-void print_matrix(int row, int col, int matrix[row][col]){
+static void print_matrix(int row, int col, int matrix[row][col]){
 
     printf("\n");
     
@@ -46,18 +48,20 @@ void print_matrix(int row, int col, int matrix[row][col]){
     printf("\n");
 }
 
-void print_float_matrix(int row, int col, float matrix[row][col]){
+static void print_float_matrix(int row, int col, float matrix[row][col]){
+
+    printf("\n");
 
     for (int x = 0; x < row; x++){
         for (int y = 0; y < col; y++){
             printf("%0.2f\t",matrix[x][y]);
-            if (y == row - 1) printf("\n");
+            if (y == row - 1) printf("\n\n");
         }
     }
     printf("\n");
 }
 
-void print_minor_matrix(int row, int col, int matrix[row][col][row - 1][col- 1]){
+static void print_minor_matrix(int row, int col, int matrix[row][col][row - 1][col- 1]){
     
     for(int v = 0; v < row; v++){
         for(int w = 0; w < col; w++){
@@ -76,7 +80,7 @@ void print_minor_matrix(int row, int col, int matrix[row][col][row - 1][col- 1])
     }
 }
 
-void print_sub_matrix(int row_1, int col_1,int row_2, int col_2, int matrix[row_1][col_1][row_2][col_2]){
+static void print_sub_matrix(int row_1, int col_1,int row_2, int col_2, int matrix[row_1][col_1][row_2][col_2]){
     
     for(int v = 0; v < row_1; v++){
         for(int w = 0; w < col_1; w++){
@@ -95,7 +99,7 @@ void print_sub_matrix(int row_1, int col_1,int row_2, int col_2, int matrix[row_
     }
 }
 
-void transpose_matrix(int row, int col, int matrix_result[row][col],int matrix_input[row][col]){
+static void transpose_matrix(int row, int col, int matrix_result[row][col],int matrix_input[row][col]){
 
     int matrix_tmp[row][col];
 
@@ -110,7 +114,7 @@ void transpose_matrix(int row, int col, int matrix_result[row][col],int matrix_i
     }
 }
 
-void add_matrix(int row, int col, int matrix_result[row][col],int matrix_input_1[row][col],int matrix_input_2[row][col]){
+static void add_matrix(int row, int col, int matrix_result[row][col],int matrix_input_1[row][col],int matrix_input_2[row][col]){
 
     for (int x = 0; x < row; x++){
         for (int y = 0; y < col; y++)
@@ -118,7 +122,7 @@ void add_matrix(int row, int col, int matrix_result[row][col],int matrix_input_1
     }
 }
 
-void subtract_matrix(int row, int col, int matrix_result[row][col],int matrix_input_1[row][col],int matrix_input_2[row][col]){
+static void subtract_matrix(int row, int col, int matrix_result[row][col],int matrix_input_1[row][col],int matrix_input_2[row][col]){
 
     for (int x = 0; x < row; x++){
         for (int y = 0; y < col; y++)
@@ -126,7 +130,7 @@ void subtract_matrix(int row, int col, int matrix_result[row][col],int matrix_in
     }
 }
 
-void multiply_matrix(int row, int col, int matrix_result[row][col],int matrix_input_1[row][col],int matrix_input_2[row][col]){
+static void multiply_matrix(int row, int col, int matrix_result[row][col],int matrix_input_1[row][col],int matrix_input_2[row][col]){
 
     for (int x = 0; x < row; x++){
         for (int y = 0; y < col; y++){
@@ -137,7 +141,7 @@ void multiply_matrix(int row, int col, int matrix_result[row][col],int matrix_in
     }
 }
 
-float determinant_matrix(int row, int col, int matrix[row][col]){
+static float determinant_matrix(int row, int col, int matrix[row][col]){
 
     float a = 0,b = 0,c = 0;
 
@@ -160,7 +164,7 @@ float determinant_matrix(int row, int col, int matrix[row][col]){
     }
 }
 
-void minor_matrix(int row, int col, int matrix_result[row][col][row - 1][col- 1],int matrix_input[row][col],int dimension){
+static void minor_matrix(int row, int col, int matrix_result[row][col][row - 1][col- 1],int matrix_input[row][col],int dimension){
 
     for(int target_row = 0; target_row < row; target_row++){
         for(int target_col = 0; target_col < col; target_col++){
@@ -182,7 +186,7 @@ void minor_matrix(int row, int col, int matrix_result[row][col][row - 1][col- 1]
     }
 }
 
-void get_cofactor(int row, int col, int matrix_result[row][col],int matrix_input[row][col][row - 1][col- 1]){
+static void get_cofactor(int row, int col, int matrix_result[row][col],int matrix_input[row][col][row - 1][col- 1]){
 
     for (int x = 0; x < row; x++){
         for (int y = 0; y < col; y++){
@@ -191,7 +195,7 @@ void get_cofactor(int row, int col, int matrix_result[row][col],int matrix_input
     }
 }
 
-void invers_matrix(int row, int col, float matrix_result[row][col],int matrix_input[row][col],float determinant){
+static void invers_matrix(int row, int col, float matrix_result[row][col],int matrix_input[row][col],float determinant){
 
     for (int x = 0; x < row; x++){
         for (int y = 0; y < col; y++){
@@ -200,7 +204,7 @@ void invers_matrix(int row, int col, float matrix_result[row][col],int matrix_in
     }
 }
 
-void transfer_matrix(int row, int col, int matrix_result[row][col], int matrix_input[row][col]){
+static void transfer_matrix(int row, int col, int matrix_result[row][col], int matrix_input[row][col]){
 
     for (int x = 0; x < row; x++){
         for (int y = 0; y < col; y++){

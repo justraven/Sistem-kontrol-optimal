@@ -7,10 +7,10 @@
 #include "../PRAKTIKUM-1/MatrixLib.h"
 #include "CalculusLib.h"
 
-int function_input[y_index][x_index] = {0,0,3,0, // merupakan representasi dari f(poly_x,poly_y) = poly_x^3*poly_y^3 + 3x^2 + poly_y^2
-                                        0,0,0,0,
-                                        1,0,0,0,
-                                        0,0,0,1};
+static int function_input[y_index][x_index] = {0,0,3,0, // f(x,y) = x^3*y^3 + 3x^2 + y^2
+                                               0,0,0,0,
+                                               1,0,0,0,
+                                               0,0,0,1};
 
 int function_output[y_index][x_index];
 
@@ -18,6 +18,7 @@ int main(){
     
     printf("Representasi fungsi polynomial dengan matrix :\n");
     print_function_matrix(y_index,x_index,function_input);
+    printf("Hessian matrix : \n");
     hessian_matrix(y_index,x_index,function_input);
 
     return 0;

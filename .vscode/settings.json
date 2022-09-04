@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "PRAKTIKUM-1_3.C": "cpp",
-        "matrixlib.h": "c"
+        "matrixlib.h": "c",
+        "random": "c"
     }
 }
