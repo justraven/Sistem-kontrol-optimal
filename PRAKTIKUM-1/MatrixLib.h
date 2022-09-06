@@ -21,8 +21,10 @@ static void invers_matrix(int row, int col, float matrix_result[row][col],int ma
 static void add_matrix(int row, int col, int matrix_result[row][col],int matrix_input_1[row][col],int matrix_input_2[row][col]);
 static void subtract_matrix(int row, int col, int matrix_result[row][col],int matrix_input_1[row][col],int matrix_input_2[row][col]);
 static void multiply_matrix(int row, int col, int matrix_result[row][col],int matrix_input_1[row][col],int matrix_input_2[row][col]);
+static void eigen_val(int row, int col, int matrix[row][col]);
 
 static float determinant_matrix(int row, int col, int matrix[row][col]);
+
 
 static void input_matrix(int row, int col, int matrix[row][col]){
 
@@ -212,6 +214,28 @@ static void transfer_matrix(int row, int col, int matrix_result[row][col], int m
         }
     }
 
+}
+
+static void eigen_val(int row, int col, int matrix[row][col]){
+
+    float lamda[2];
+    int matrix_temp[2][2];
+
+    // solve using quadratic formula
+
+    int a = 1;
+    int b = -1 *(matrix[0][0] + matrix[1][1]);
+    int c = -1 * matrix[0][0];
+
+    printf("%d\n",b);
+    printf("%d\n",c);
+
+    print_matrix(2,2,matrix);
+
+    for(int x = 1; x <= 2; x++){
+        lamda[x] = (-b + pow(-1,x) * sqrt(pow(b,2) - (4 * a *c)))/ (2 * a);
+        printf("lamda [%d] : %0.2f\n",x,lamda[x]);
+    }
 }
 
 #endif

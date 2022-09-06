@@ -8,7 +8,10 @@
 
 #include "MatrixLib.h"
 
-int A[ROW][COL] = {1,2,3,0,1,4,5,6,0};
+int A[ROW][COL] = {1,2,3,
+                   0,1,4,
+                   5,6,0};
+                   
 int B[ROW][COL][MINOR_ROW][MINOR_COL];
 int C[ROW][COL];
 float D[ROW][COL];

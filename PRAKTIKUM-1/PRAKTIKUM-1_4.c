@@ -1,11 +1,11 @@
 #include "MatrixLib.h"
 
-static int A[2][2] = {3,0,8,-1};
+static int A[2][2] = {3,0,
+                      8,-1};
 
 int main(){
 
-    print_matrix(2,2,A);
-    print_matrix(2,2,I);
+    eigen_val(2,2,A);
 
     return 0;
 }
