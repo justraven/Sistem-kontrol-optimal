@@ -224,8 +224,8 @@ static void eigen_val(int row, int col, int matrix[row][col]){
     // solve using quadratic formula
 
     int a = 1;
-    int b = -1 *(matrix[0][0] + matrix[1][1]);
-    int c = -1 * matrix[0][0];
+    int b = -1 * (matrix[0][0] + matrix[1][1]);
+    int c = (-1 * matrix[0][0] * -1 * matrix[1][1]) - (-1 * matrix[0][1] * -1 * matrix[1][0]);
 
     printf("%d\n",b);
     printf("%d\n",c);

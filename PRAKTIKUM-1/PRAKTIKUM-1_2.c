@@ -29,13 +29,13 @@ int main (){
     printf("Matrix P :\n");
     print_matrix(ROW,COL,P.data);
 
-    transpose_matrix(ROW,COL,A.data,A.data);
-    printf("Transpose matrix A : \n");
-    print_matrix(ROW,COL,A.data);
-
     multiply_matrix(ROW,COL,C.data,P.data,A.data);
     printf("P * A : \n");
     print_matrix(ROW,COL,C.data);
+
+    transpose_matrix(ROW,COL,A.data,A.data);
+    printf("Transpose matrix A : \n");
+    print_matrix(ROW,COL,A.data);
 
     add_matrix(ROW,COL,D.data,A.data,C.data);
     printf("A^T + [P * A] : \n");
