@@ -192,7 +192,7 @@ static void get_cofactor(int row, int col, int matrix_result[row][col],int matri
 
     for (int x = 0; x < row; x++){
         for (int y = 0; y < col; y++){
-            matrix_result[x][y] = (matrix_input[x][y][0][0]*matrix_input[x][y][1][1]) - (matrix_input[x][y][0][1]*matrix_input[x][y][1][0]);
+            matrix_result[x][y] = pow(-1,x+y) * (matrix_input[x][y][0][0]*matrix_input[x][y][1][1]) - (matrix_input[x][y][0][1]*matrix_input[x][y][1][0]);
         }
     }
 }

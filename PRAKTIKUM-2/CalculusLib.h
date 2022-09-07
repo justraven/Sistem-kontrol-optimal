@@ -73,7 +73,7 @@ void get_differential_multivar(int row,int col, int diff_x, int diff_y, int func
     if(diff_x != 0){
         for (int i = 0; i < row; i++){
             for (int j = 0; j < col; j++){
-                int x = (diff_x != diff_y) ? (get_factorial(j)) : (j * diff_x);
+                int x = (abs(diff_x - diff_y) > 1) ? (get_factorial(j)) : (j * diff_x);
                 function_temp[i][j - diff_x] = function_input[i][j] * x;
             }
         }
@@ -84,7 +84,7 @@ void get_differential_multivar(int row,int col, int diff_x, int diff_y, int func
     if(diff_y != 0){
         for (int i = 0; i < row; i++){
             for (int j = 0; j < col; j++){
-                int x = (diff_x != diff_y) ? (get_factorial(i)) : (i * diff_y);
+                int x = (abs(diff_x - diff_y) > 1) ? (get_factorial(i)) : (i * diff_y);
                 function_output[i - diff_y][j] = function_temp[i][j] * x;
             }
         }
