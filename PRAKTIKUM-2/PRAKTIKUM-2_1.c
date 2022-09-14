@@ -13,8 +13,6 @@ static int function_input[4][4] = {0,   0,  3,  0, // f(x,y) = x^3*y^3 + 3x^2 + 
 
 int function_output[4][4];
 
-float function_exp[4] = {0,0,0,3}; // 3X^3
-float function_out[4];
 
 int main(){
     

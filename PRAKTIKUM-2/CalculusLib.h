@@ -15,6 +15,8 @@ struct matrix_t{
 
 struct matrix_t hessian_output, matrix_temp[2][2];
 
+int matrix_hessian_temp[4][4];
+
 
 static int step [4][2] = {2,0,
                           1,1,
@@ -28,7 +30,8 @@ void get_integral(int poly_index,float function_input[poly_index],float function
 void get_differential(int poly_index,float function_input[poly_index],float function_output[poly_index - 1]);
 
 void get_differential_multivar(int row,int col, int diff_x, int diff_y, int function_input[row][col], int function_output[row][col]);
-static void hessian_matrix(int row, int col, int function_input[row][col], int poly_X, int poly_Y);
+static void hessian_matrix(int row, int col, int function_input[row][col]);
+
 
 void print_function(int poly_index,float function[poly_index]);
 
@@ -97,8 +100,6 @@ void get_differential_multivar(int row,int col, int diff_x, int diff_y, int func
             if(i >= row - diff_y || j >= col - diff_x)
                 function_output[i][j] = 0;
     }
-
-
 }
 
 void print_function(int poly_index,float function[poly_index]){
@@ -111,9 +112,9 @@ void print_function(int poly_index,float function[poly_index]){
     printf("]\n");
 }
 
-static void hessian_matrix(int row, int col, int function_input[row][col], int poly_X, int poly_Y){
+static void hessian_matrix(int row, int col, int function_input[row][col]){
 
-    int x = 0,b = 0, matrix_hessian_temp[4][4];
+    int x = 0,b = 0;
 
     printf("\n");
 
@@ -126,8 +127,5 @@ static void hessian_matrix(int row, int col, int function_input[row][col], int p
             x++;
         }
     }
-
-    
 }
-
 #endif
