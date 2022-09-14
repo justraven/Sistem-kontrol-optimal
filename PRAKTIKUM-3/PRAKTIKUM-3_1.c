@@ -1,4 +1,4 @@
-#include "GaussJordan.h"
+#include "definitness_lib.h"
 
 int input_function[3][3] = {    0,    3,  7,
                                 -3,   0,  0,
