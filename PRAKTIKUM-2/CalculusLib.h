@@ -28,10 +28,8 @@ static int power(int base, int a);
 
 void get_integral(int poly_index,float function_input[poly_index],float function_output[poly_index + 1]);
 void get_differential(int poly_index,float function_input[poly_index],float function_output[poly_index - 1]);
-
 void get_differential_multivar(int row,int col, int diff_x, int diff_y, int function_input[row][col], int function_output[row][col]);
 static void hessian_matrix(int row, int col, int function_input[row][col]);
-
 
 void print_function(int poly_index,float function[poly_index]);
 

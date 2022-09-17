@@ -1,89 +1,140 @@
 #ifndef MATRIX_LIB_H
 #define MATRIX_LIB_H
 
-#define getVarName(VariableName)
+typedef struct{
 
-#include <cstdio>
-#include <cstdlib>
+    int cols = 0;
+    int rows = 0;
+    int LRow = 0; //layer row
+    int LCol = 0; //layer col
 
-class matrix{
+    int data_int[4][4][64][64];
+    float data_float[4][4][64][64];
 
-    private :
+}Matrix_t;
 
-        int rows = 0;
-        int cols = 0;
-        int layer = 0;
-        int data[4][64][64];
-    
+class Matrix{
+
     public :
 
-        matrix(int rows_,int cols_){
-            cols = cols_;
-            rows = rows_;
-        }
+        void setMatrix(Matrix_t *matrix, int row, int col);
 
-        void setValue(int rows, int cols, int value);
-        void setLayer(int layer);
+        void inputMatrix(Matrix_t *matrix);
+        void printMatrix(Matrix_t *matrix);
+        void printSubMatrix(Matrix_t *matrix);
 
-        int getColsSize(void){return cols;};
-        int getRowsSize(void){return rows;};
-        int getValue(int rows, int cols);
-        int getLayer(void);
+        void toFloatMatrix(Matrix_t *matrix);
+        void printFloatMatrix(Matrix_t *matrix);
 
-        void inputMatrix(void);
-        void printMatrix(void);
+        int getColoumnSize(Matrix_t *matrix){return matrix->cols;}
+        int getRowSize(Matrix_t *matrix){return matrix->rows;}
 
-        float determinant(void);
+        void setValue(Matrix_t *matrix, int row, int col, int value);
+        int getValue(Matrix_t *matrix, int row, int col);
 
-        void invers(void);
-        void transpose(void);
-        void minor(void);
-        void cofactor(void);
+        void setRowLayer(Matrix_t *matrix, int rowLayerSize);
+        void setColLayer(Matrix_t *matrix, int colLayerSize);
 
+        int getRowLayer(Matrix_t *matrix);
+        int getColLayer(Matrix_t *matrix);
+        
 };
 
-void matrix::setValue(int rows,int cols, int value){data[layer][rows][cols] = value;}
-void matrix::setLayer(int layerSize){layer = layerSize;}
+void Matrix::setMatrix(Matrix_t *matrix, int row, int col){
+    matrix->rows = row;
+    matrix->cols = col;
+}
 
-int matrix::getValue(int rows, int cols){return data[layer][rows][cols];}
-int matrix::getLayer(void){return layer;}
+void Matrix::setValue(Matrix_t *matrix, int row, int col, int value){
+    matrix->data_int[matrix->LRow][matrix->LCol][row][col] = value;
+}
 
-void matrix::inputMatrix(void){
+void Matrix::setRowLayer(Matrix_t *matrix, int rowLayerSize){
+    matrix->LRow = rowLayerSize;
+}
+void Matrix::setColLayer(Matrix_t *matrix, int colLayerSize){
+    matrix->LCol = colLayerSize;
+}
 
-    int i = 0;
+int Matrix::getValue(Matrix_t *matrix, int row, int col){
+    return matrix->data_int[matrix->LRow][matrix->LCol][row][col];
+}
+
+int Matrix::getRowLayer(Matrix_t *matrix){
+    return matrix->LRow;
+}
+
+int Matrix::getColLayer(Matrix_t *matrix){
+    return matrix->LCol;
+}
+
+void Matrix::inputMatrix(Matrix_t *matrix){
 
     printf("\n");
 
-    for(int x = 0; x < getRowsSize(); x++){
-        for(int y=0; y < getColsSize(); y++){
+    for(int x = 0; x < getRowSize(matrix); x++){
+        for(int y = 0; y < getColoumnSize(matrix); y++){
             printf("matrix[%d][%d] : ",x,y);
-            scanf("%d",&data[layer][x][y]);
+            scanf("%d",&matrix->data_int[matrix->LRow][matrix->LCol][x][y]);
         }
     }
+
     printf("\n");
+
 }
 
-void matrix::printMatrix(){
+void Matrix::printMatrix(Matrix_t *matrix){
 
     printf("\n");
 
-    for(int x = 0; x < getRowsSize(); x++){
-        for(int y=0; y < getColsSize(); y++){
-            printf("%d\t",data[layer][x][y]);
-            if(y == getRowsSize() - 1) printf("\n\n");
+    for(int x = 0; x < getRowSize(matrix); x++){
+        for(int y = 0; y < getColoumnSize(matrix); y++){
+            printf("%d\t",matrix->data_int[matrix->LRow][matrix->LCol][x][y]);
+            if(y == getRowSize(matrix) - 1) printf("\n\n");
         }
     }
+
     printf("\n");
+
 }
 
-void matrix::transpose(void){
+void Matrix::printFloatMatrix(Matrix_t *matrix){
 
     printf("\n");
 
-    for(int x = 0; x < getRowsSize(); x++){
-        for(int y = 0; y < getColsSize(); y++)
-            data[layer + 1][y][x] = data[layer][x][y];
+    for(int x = 0; x < getRowSize(matrix); x++){
+        for(int y = 0; y < getColoumnSize(matrix); y++){
+            printf("%0.2f\t",matrix->data_float[matrix->LRow][matrix->LCol][x][y]);
+            if(y == getRowSize(matrix) - 1) printf("\n\n");
+        }
+    }
+
+    printf("\n");
+
+}
+
+void Matrix::toFloatMatrix(Matrix_t *matrix){
+
+    for(int x = 0; x < getRowSize(matrix); x++){
+        for(int y = 0; y < getColoumnSize(matrix); y++)
+            matrix->data_float[matrix->LRow][matrix->LCol][x][y] = (float)matrix->data_int[matrix->LRow][matrix->LCol][x][y];
     }
 }
+
+void Matrix::printSubMatrix(Matrix_t *matrix){
+
+    for(int x = 0; x < getRowSize(matrix); x++){
+        for(int y = 0; y < getColoumnSize(matrix); y++){
+
+            setRowLayer(x);
+            setColLayer(y);
+
+            printFloatMatrix(matrix);
+
+        }
+    }
+}
+
+
 
 #endif
