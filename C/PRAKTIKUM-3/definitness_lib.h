@@ -1,5 +1,5 @@
-#ifndef GAUSS_JORDAN_H
-#define GAUSS_JORDAN_H
+#ifndef DEFINITNESS_LIB_H
+#define DEFINITNESS_LIB_H
 
 #include "../PRAKTIKUM-2/CalculusLib.h"
 
@@ -15,8 +15,8 @@ int uji_definitess(int row,int col, int matrix_input[row][col]){
     get_differential_multivar(3,3,1,1,matrix_input,turunan_y_x);
     get_differential_multivar(3,3,0,2,matrix_input,turunan_y_2);
 
-    print_function_matrix(3,3,turunan_x_y);
-
+    // print_function_matrix(3,3,turunan_x_2);
+    
     for(int x = 0; x < row; x++){
         for(int y = 0; y < col; y++)
             a += turunan_x_2[x][y];

@@ -3,6 +3,7 @@
         "PRAKTIKUM-1_3.C": "cpp",
         "matrixlib.h": "c",
         "random": "c",
-        "cstdio": "cpp"
+        "cstdio": "cpp",
+        "calculuslib.h": "c"
     }
 }

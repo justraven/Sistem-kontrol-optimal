@@ -15,6 +15,11 @@ typedef enum{
 
 typedef struct{
 
+    int cols = 0;
+    int rows = 0;
+    int LRow = 0; //layer row
+    int LCol = 0; //layer col
+
     float determinant;
 
     float adjoint[4][4][64][64];
@@ -29,16 +34,70 @@ class MatrixMathOperation{
 
     public :
 
+        void printFloatMatrix(MatrixMathOperation_t *mat);
+        void printMinorMatrix(MatrixMathOperation_t *mat);
+        void setRowLayer(MatrixMathOperation_t *mat, int rowLayerSize);
+        void setColLayer(MatrixMathOperation_t *mat, int colLayerSize);
+
+        int getRowSize(MatrixMathOperation_t *mat);
+        int getColoumnSize(MatrixMathOperation_t *mat);
+
         MatrixOp getTranspose(Matrix_t *mat, Matrix_t *matrixResult);
         MatrixOp add(Matrix_t *matrixInput_1, Matrix_t *matrixInput_2, Matrix_t *matrixResult);
         MatrixOp subtract(Matrix_t *matrixInput_1, Matrix_t *matrixInput_2, Matrix_t *matrixResult);
         MatrixOp multiply(Matrix_t *matrixInput_1, Matrix_t *matrixInput_2, Matrix_t *matrixResult);
         MatrixOp getDeterminant(Matrix_t *mat, MatrixMathOperation_t *result);
         MatrixOp getMinorMatrix(Matrix_t *mat, MatrixMathOperation_t *result);
-        MatrixOp getAdjoint(Matrix_t *mat, MatrixMathOperation_t *result);
+        MatrixOp getCofactor(Matrix_t *mat, MatrixMathOperation_t *result);
         MatrixOp getInvers(Matrix_t *mat, MatrixMathOperation_t *result);
-
+        
 };
+
+int MatrixMathOperation::getRowSize(MatrixMathOperation_t *mat){
+    return mat->rows;
+}
+
+int MatrixMathOperation::getColoumnSize(MatrixMathOperation_t *mat){
+    return mat->cols;
+}
+
+void MatrixMathOperation::setRowLayer(MatrixMathOperation_t *mat, int rowLayerSize){
+    mat->LRow = rowLayerSize;
+}
+
+void MatrixMathOperation::setColLayer(MatrixMathOperation_t *mat, int colLayerSize){
+    mat->LCol = colLayerSize;
+}
+
+void MatrixMathOperation::printFloatMatrix(MatrixMathOperation_t *mat){
+
+    printf("\n");
+
+    for(int x = 0; x < getRowSize(mat); x++){
+        for(int y = 0; y < getColoumnSize(mat); y++){
+            printf("%0.2f\t",mat->minor[mat->LRow][mat->LCol][x][y]);
+            if(y == getRowSize(mat) - 1) printf("\n\n");
+        }
+    }
+
+    printf("\n");
+
+}
+
+void MatrixMathOperation::printMinorMatrix(MatrixMathOperation_t *mat){
+
+    for(int x = 0; x < getRowSize(mat); x++){
+        for(int y = 0; y < getColoumnSize(mat); y++){
+            setRowLayer(mat,x);
+            setColLayer(mat,y);
+
+            printFloatMatrix(mat);
+        }
+    }
+
+
+
+}
 
 MatrixOp MatrixMathOperation::getTranspose(Matrix_t *mat, Matrix_t *matrixResult){
 
@@ -147,6 +206,58 @@ MatrixOp MatrixMathOperation::getDeterminant(Matrix_t *mat, MatrixMathOperation_
 
     return OK;
 
+}
+
+MatrixOp MatrixMathOperation::getMinorMatrix(Matrix_t *mat, MatrixMathOperation_t *result){
+
+    Matrix matrix;
+
+    if(mat->rows != mat->cols)
+        return ERR_MATRIX_DIMENSION;
+    if(mat->rows < 3 || mat->cols < 3)
+        return ERR_MATRIX_SIZE;
+
+    result->rows = mat->rows - 1;
+    result->cols - mat->cols - 1;
+
+    matrix.toFloatMatrix(mat);
+
+    for(int targetRow = 0; targetRow < matrix.getRowSize(mat); targetRow++){
+        for(int targetCol = 0; targetCol < matrix.getColoumnSize(mat); targetCol++){
+
+            setRowLayer(result,targetRow);
+            setColLayer(result,targetCol);
+
+            int minorRow = 0, minorCol = 0;
+
+            for(int x; x < matrix.getRowSize(mat); x++){
+                for(int y; y < matrix.getColoumnSize(mat); y++){
+                    if(x != targetRow && y != targetCol)
+                        result->minor[result->LRow][result->LCol][minorRow][minorCol++] = mat->data_float[mat->LRow][mat->LCol][x][y];
+                    
+                    if(minorRow == matrix.getRowSize(mat) - 1){ // dimensi diwakili oleh row
+                        minorCol = 0;
+                        minorRow++;
+                    }
+                }
+            }
+        }
+    }
+
+    printMinorMatrix(result);
+
+    return OK;
+}
+
+MatrixOp MatrixMathOperation::getCofactor(Matrix_t *mat, MatrixMathOperation_t *result){
+
+    return OK;
+}
+
+MatrixOp MatrixMathOperation::getInvers(Matrix_t *mat, MatrixMathOperation_t *result){
+
+
+    return OK;
 }
 
 #endif

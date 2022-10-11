@@ -125,9 +125,9 @@ void Matrix::printSubMatrix(Matrix_t *matrix){
 
     for(int x = 0; x < getRowSize(matrix); x++){
         for(int y = 0; y < getColoumnSize(matrix); y++){
-
-            setRowLayer(x);
-            setColLayer(y);
+            
+            setRowLayer(matrix,x);
+            setColLayer(matrix,y);
 
             printFloatMatrix(matrix);
 
