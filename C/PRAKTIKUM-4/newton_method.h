@@ -72,9 +72,9 @@ void getDifferential(int row, int col, int diff_x, int diff_y, float functionInp
 void getGradient(int row, int col, float functionInput[row][col]){
     
     getDifferential(row,col,1,0,functionInput,turunan_x);
-    // printFunction(row,col,turunan_x);
+    printFunction(row,col,turunan_x);
     getDifferential(row,col,0,1,functionInput,turunan_y);
-    // printFunction(row,col,turunan_y);
+    printFunction(row,col,turunan_y);
 
 }
 

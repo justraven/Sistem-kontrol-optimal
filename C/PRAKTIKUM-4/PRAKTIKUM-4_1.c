@@ -15,13 +15,16 @@ float function[3][3] = {1, -1, 3,
 float hessian[2][2] = {0,0,
                        0,0};
 
-float seed[2] = {0,0};
+float seed[2] = {0,0}; // x,y
 float f_x[2] = {0,0};
 float DValue[2] = {0,0};
 
 int main(void){
 
     printf("\n-------------------- ITERIASI %d --------------------\n", iteration);
+
+    printf("input function :\n");
+    printFunction(3,3,function);
 
     printf("\nx[%d] : { %0.3f , %0.3f }\n", iteration, seed[0],seed[1]);
     currentError = absError(3,3,seed,f_x,function);
@@ -46,13 +49,11 @@ int main(void){
         seed[1] = seed[1] + DValue[1];
 
         printf("x[%d] = x[%d] + d[%d]\n", iteration, iteration-1, iteration-1);
-        printf("x[%d] = { %0.3f , %0.3f }\n", iteration, seed[0], seed[1]);
 
+        printf("\nx[%d] = { %0.3f , %0.3f }\n", iteration, seed[0], seed[1]);
         currentError = absError(3,3,seed,f_x,function);
         printf("f_x[%d] : { %0.3f , %0.3f } error : %0.3f \n",iteration, f_x[0], f_x[1] ,currentError);
 
     }
-
-
     return 0;
 }
